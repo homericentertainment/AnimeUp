@@ -1,4 +1,4 @@
-// import Root from './root'
+import Root from './root'
 import { Text, I18nManager } from 'react-native'
 import 'expo-dev-client'
 
@@ -11,13 +11,5 @@ export default function App() {
     style: { color: 'white' },
   };
 
-  return (<>
-    <Text>sdfsdf</Text>
-    <Text>sdfsdf</Text>
-    <Text>sdfsdf</Text>
-    <Text>sdfsdf</Text>
-    <Text>sdfsdf</Text>
-    <Text style={{color:'black'}}>sdfsdf</Text>
-    <Text>sdfsdf</Text></>
-  )
+  return <Root />
 }
