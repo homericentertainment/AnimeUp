@@ -4,12 +4,12 @@ import { Error } from './pages/error'
 import { useState, useEffect } from 'react'
 import * as Font from 'expo-font'
 import style from './style.js'
-// import { Vote } from './pages/vote'
-// import { Saved } from './pages/saved'
-// import { Landing } from './pages/landing'
-// import { Header } from './cmps/header'
-// import { Question } from './cmps/question'
-// import { UpperPopup } from './cmps/upper-popup'
+import { Vote } from './pages/vote'
+import { Saved } from './pages/saved'
+import { Landing } from './pages/landing'
+import { Header } from './cmps/header'
+import { Question } from './cmps/question'
+import { UpperPopup } from './cmps/upper-popup'
 import { service } from './service'
 
 export default function Root() {
@@ -173,13 +173,13 @@ export default function Root() {
 
     try {
         return <ImageBackground source={require('./images/background.webp')} style={style.backImg}>
-            {/* {page !== 'landing' && <Header header={header} setPage={setPage} />}
+            {page !== 'landing' && <Header header={header} setPage={setPage} />}
             <View style={style.main}>
                 {page === 'saved' && <Saved style={style} user={user} setUpperPopup={setUpperPopup} setPage={setPage} setHeader={setHeader} />}
                 {page === 'vote' && <Vote style={style} user={user} swiped={swiped} setSwiped={setSwiped} setHeader={setHeader} setUpperPopup={setUpperPopup} handleChoice={handleChoice} setPage={setPage} loadCurrentEvent={loadCurrentEvent} voteState={voteState} setVoteState={setVoteState} event={event} />}
                 {page === 'landing' && <Landing setPage={setPage} />}
             </View>
-            <UpperPopup tyle={style} upperPopup={upperPopup} setUpperPopup={setUpperPopup} /> */}
+            <UpperPopup tyle={style} upperPopup={upperPopup} setUpperPopup={setUpperPopup} />
         </ImageBackground>
     }
     catch (err) {
