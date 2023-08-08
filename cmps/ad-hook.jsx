@@ -1,44 +1,54 @@
-import { useEffect, useState } from 'react'
+// useInterstitialAd.js
+import { useEffect, useState, useRef } from 'react'
 import { TestIds, InterstitialAd, AdEventType } from 'react-native-google-mobile-ads'
 
-const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+const interstitialAdUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-7417791312056885~9528124470'
+
+const interstitial = InterstitialAd.createForAdRequest(interstitialAdUnitId, {
   requestNonPersonalizedAdsOnly: true
 })
 
 export default function useInterstitialAd() {
   const [interstitialLoaded, setInterstitialLoaded] = useState(false)
+  
+  const interstitialRef = useRef(interstitial)
 
   useEffect(() => {
-    const unsubscribeLoaded = interstitial.addAdEventListener(
+    const unsubscribeLoaded = interstitialRef.current.addAdEventListener(
       AdEventType.LOADED,
       () => {
-        setInterstitialLoaded(true)
-        console.log('Interstitial loaded')
+        console.log('Interstitial loaded1')
       }
     )
-  
-    const unsubscribeClosed = interstitial.addAdEventListener(
+
+    const unsubscribeClosed = interstitialRef.current.addAdEventListener(
       AdEventType.CLOSED,
       () => {
-        setInterstitialLoaded(false)
-        interstitial.load()
-        console.log('Interstitial closed')
+        console.log('Interstitial closed1')
+        loadInterstitialAd()
       }
     )
-  
-    interstitial.load()
-  
+
+    interstitialRef.current.load()
+
     return () => {
-      unsubscribeClosed()
       unsubscribeLoaded()
+      unsubscribeClosed()
     }
   }, [])
+
+  const loadInterstitialAd = () => {
+    interstitialRef.current.load()
+    setInterstitialLoaded(true)
+  }
 
   const showInterstitialAd = () => {
     if (interstitialLoaded) {
       interstitial.show()
+      return true
     }
+    return false
   }
 
-  return showInterstitialAd
+  return { showInterstitialAd, loadInterstitialAd }
 }

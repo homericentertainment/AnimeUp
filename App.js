@@ -1,6 +1,6 @@
 import Root from './root'
 import { Text, I18nManager } from 'react-native'
-import 'expo-dev-client'
+// import 'expo-dev-client'
 
 export default function App() {
   I18nManager.forceRTL(false)

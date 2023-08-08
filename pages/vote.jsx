@@ -5,6 +5,7 @@ import { Error } from './error'
 import { Swiper } from '../cmps/swiper'
 import { Loader } from '../cmps/loader'
 import { service } from '../service'
+import useInterstitialAd from '../cmps/ad-hook'
 
 export function Vote({ user, setUpperPopup, voteState, event, loadCurrentEvent, handleChoice, swiped, setSwiped }) {
     const [error, setError] = useState(false)
@@ -16,19 +17,25 @@ export function Vote({ user, setUpperPopup, voteState, event, loadCurrentEvent, 
         nextSecond: {},
         d: true
     })
+    const { showInterstitialAd, loadInterstitialAd } = useInterstitialAd()
 
     useEffect(() => {
         loadSaved()
         loadSwiped()
         loadCurrentEvent()
+        loadInterstitialAd()
     }, [])
 
     useEffect(() => {
         try {
+            if (voteState &&
+                voteState.answeredQuestions &&
+                (voteState.totalQuestions-1 === voteState.answeredQuestions ||
+                    (voteState.totalQuestions + 1) / voteState.answeredQuestions === 2)) showInterstitialAd()
             let { currentTier } = voteState
             let first = event.participants[voteState[currentTier][0]]
             let second = event.participants[voteState[currentTier][1]]
-            
+
             let nextFirst, nextSecond
             if (currentTier === Math.log2(voteState.totalParticipants) || currentTier === Math.log2(voteState.totalParticipants) - 1) {
                 setCurrentData({
@@ -41,12 +48,10 @@ export function Vote({ user, setUpperPopup, voteState, event, loadCurrentEvent, 
                 return
             }
             if (voteState[currentTier].length === 2 && voteState[currentTier + 1].length !== 0) {
-                console.log('2')
                 nextFirst = event.participants[voteState[currentTier + 1][0]]
                 nextSecond = event.participants[voteState[currentTier + 1][1]]
             }
             else {
-                console.log('3')
                 nextFirst = event.participants[voteState[currentTier][2]]
                 nextSecond = event.participants[voteState[currentTier][3]]
             }
@@ -150,19 +155,19 @@ export function Vote({ user, setUpperPopup, voteState, event, loadCurrentEvent, 
                 <View style={style.progressWrapper}>
                     <View style={{ ...style.progress, width: `${(voteState.answeredQuestions / voteState.totalQuestions) * 100}%` }}></View>
                 </View>
-                    <Swiper
-                        display={currentData.d}
-                        left={currentData.d ? currentData.first.image : currentData.nextFirst.image}
-                        right={currentData.d ? currentData.second.image : currentData.nextSecond.image}
-                        onChoice={onChoice}
-                        initialTimer={swiped ? 15000 : 3000} />
-                    <Swiper
-                        display={!currentData.d}
-                        left={!currentData.d ? currentData.first.image : currentData.nextFirst.image}
-                        right={!currentData.d ? currentData.second.image : currentData.nextSecond.image}
-                        onChoice={onChoice}
-                        initialTimer={swiped ? 15000 : 3000} />
-                    <View style={style.randomize} ><Text onPress={() => onChoice(Math.random() > 0.5 ? 0 : 1)} style={style.randomizeText}>Randomize</Text></View>
+                <Swiper
+                    display={currentData.d}
+                    left={currentData.d ? currentData.first.image : currentData.nextFirst.image}
+                    right={currentData.d ? currentData.second.image : currentData.nextSecond.image}
+                    onChoice={onChoice}
+                    initialTimer={swiped ? 15000 : 3000} />
+                <Swiper
+                    display={!currentData.d}
+                    left={!currentData.d ? currentData.first.image : currentData.nextFirst.image}
+                    right={!currentData.d ? currentData.second.image : currentData.nextSecond.image}
+                    onChoice={onChoice}
+                    initialTimer={swiped ? 15000 : 3000} />
+                <View style={style.randomize} ><Text onPress={() => onChoice(Math.random() > 0.5 ? 0 : 1)} style={style.randomizeText}>Randomize</Text></View>
             </View>
         )
     }

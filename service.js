@@ -52,7 +52,6 @@ async function addVote(userId, chosen, eventId) {
 
 async function createEvent() {
     const newEvent = await httpService.post('create-event')
-    console.log('createEvent')
     return newEvent
 }
 

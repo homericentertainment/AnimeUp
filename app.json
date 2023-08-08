@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AnimeUp",
-    "slug": "AnimeUp",
+    "name": "animeup",
+    "slug": "animeup",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
