@@ -40,7 +40,7 @@ export default function Root() {
 
     const loadCurrentEvent = async (ev = false) => {
         try {
-            let loadedEvent = await service.getCurrentEvent()
+            let loadedEvent
             if (!ev) loadedEvent = await service.getCurrentEvent()
             else loadedEvent = ev
             setHeader(loadedEvent.title + '?')
@@ -50,10 +50,10 @@ export default function Root() {
                 return
             }
             const prevId = await service.loadFromStorage('prevId')
-            if (!voteState) {
-                const state = await createNewState(loadedEvent)
-                setVoteState(state)
-            }
+            // if (!voteState) {
+            //     const state = await createNewState(loadedEvent)
+            //     setVoteState(state)
+            // }
             let state
             if (prevId === loadedEvent._id) {
                 const stateFromStorage = await service.loadFromStorage('voteState')

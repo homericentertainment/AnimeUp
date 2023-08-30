@@ -275,7 +275,6 @@ const style = StyleSheet.create({
     zIndex: 10,
   },
   question: {
-    // make a popup on the center of the screen
     position: "absolute",
     zIndex: 100,
     top: Dimensions.get('window').height / 2 - 200,

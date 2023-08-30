@@ -34,7 +34,6 @@ export function Helper() {
           setSecondImageVisible(true)
           moveRightAnimation.start(() => {
             setSecondImageVisible(false)
-            // Reset the animated values for the next animation loop
             opacityValue.setValue(0)
             translateYValue.setValue(0)
             translateXValue.setValue(0)

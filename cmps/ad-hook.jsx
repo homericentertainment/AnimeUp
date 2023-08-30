@@ -1,8 +1,11 @@
-// useInterstitialAd.js
 import { useEffect, useState, useRef } from 'react'
 import { TestIds, InterstitialAd, AdEventType } from 'react-native-google-mobile-ads'
+import { Platform } from 'react-native'
 
-const interstitialAdUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-7417791312056885~9528124470'
+const interstitialAdUnitId = Platform.select({
+  ios: __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-7417791312056885/3865930769',
+  android:  __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-7417791312056885~9528124470',
+});
 
 const interstitial = InterstitialAd.createForAdRequest(interstitialAdUnitId, {
   requestNonPersonalizedAdsOnly: true
