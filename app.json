@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.homericgames.AnimeUp"
+      "package": "com.homericgames.animecomp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
